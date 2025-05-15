@@ -1,0 +1,11 @@
+telebot
+types
+subprocess
+os
+re
+zipfile
+threading
+time
+datetime
+platform
+TeleBot
