@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 import platform
 
-TOKEN = '7384019095:AAH5-rzlhgKpM0oZ8iMGl4DayJt9UAD3c2I'
+TOKEN = '8181549440:AAGNcxLqhlJ612PqbWbA7gNqWGt1zjhhGhM'
 bot = telebot.TeleBot(TOKEN)
 
 admin_id = '6237935028'  # ايديك
