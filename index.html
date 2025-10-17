@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat AMJD - محادثة من المستقبل</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- يمكنك إضافة خطوط جوجل هنا إذا أردت -->
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- الخلفية الديناميكية -->
+    <div class="dynamic-background"></div>
+
+    <!-- شاشة الترحيب وإدخال الاسم (تظهر أول مرة) -->
+    <div id="welcome-screen" class="glass-effect">
+        <img src="logo.png" alt="Chat AMJD Logo" class="logo"> <!-- اختياري: ضع شعار هنا -->
+        <h1>أهلاً بك في Chat AMJD</h1>
+        <p>بوابتك للمستقبل. أدخل اسمك للانضمام:</p>
+        <input type="text" id="username-input" placeholder="اكتب اسمك هنا..." maxlength="20">
+        <button id="join-button">دخول إلى المستقبل</button>
+    </div>
+
+    <!-- واجهة الدردشة الرئيسية (مخفية في البداية) -->
+    <div id="chat-container" class="hidden">
+        <aside class="chat-list glass-effect">
+            <h2>المحادثات</h2>
+            <ul id="chats">
+                <!-- سيتم إضافة المحادثات هنا (مثال) -->
+                <li class="chat-item group active" data-chat-id="general">
+                    <span class="chat-icon">🌐</span> دردشة عامة
+                </li>
+                <li class="chat-item private" data-chat-id="user123">
+                    <span class="chat-icon">👤</span>
+                </li>
+                <!-- يمكنك إضافة المزيد من المحادثات الديناميكية -->
+            </ul>
+            <div class="user-profile">
+                <span id="current-username">اسم المستخدم</span>
+                <button id="logout-button" title="تغيير الاسم">🔄</button>
+            </div>
+        </aside>
+
+        <main class="chat-area">
+            <header class="chat-header glass-effect">
+                <h3 id="chat-title">دردشة عامة</h3>
+                <!-- يمكن إضافة معلومات أخرى هنا -->
+            </header>
+
+            <div class="messages" id="messages">
+                <!-- الرسائل ستظهر هنا -->
+                <!-- مثال لشكل الرسالة -->
+                <!--
+                <div class="message received">
+                    <span class="sender">علي</span>
+                    <p class="text">مرحباً بالعالم المستقبلي!</p>
+                    <span class="timestamp">الاثنين - 3:25 مساءً - 10 أبريل 2025</span>
+                </div>
+                <div class="message sent">
+                    <p class="text">أهلاً بك يا علي!</p>
+                    <span class="timestamp">الاثنين - 3:26 مساءً - 10 أبريل 2025</span>
+                </div>
+                 -->
+            </div>
+
+            <form id="message-form" class="message-input-area glass-effect">
+                <input type="text" id="message-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+                <button type="submit" id="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" /></svg>
+                </button>
+            </form>
+        </main>
+    </div>
+
+    <!-- عناصر الصوت (مخفية) -->
+    <audio id="send-sound" src="send.mp3" preload="auto"></audio>
+    <audio id="receive-sound" src="receive.mp3" preload="auto"></audio>
+
+    <!-- مكتبات Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
+
+    <!-- السكربت الخاص بنا -->
+    <script src="script.js"></script>
+</body>
+</html>

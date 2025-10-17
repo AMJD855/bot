@@ -1,0 +1,513 @@
+/* --- الإعدادات العامة والمتغيرات --- */
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&family=Orbitron:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #00d4ff; /* لون رئيسي مستقبلي */
+    --secondary-color: #a855f7; /* لون ثانوي جذاب */
+    --text-color: #e0e0e0;
+    --bg-color-dark: #10121a;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --blur-intensity: 8px;
+    --font-primary: 'Almarai', sans-serif; /* خط عربي أنيق */
+    --font-futuristic: 'Orbitron', sans-serif; /* خط لمسات مستقبلية */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-color-dark);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow: hidden; /* لمنع ظهور شريط تمرير إضافي بسبب الخلفية */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative; /* مهم للخلفية */
+}
+
+/* --- الخلفية الديناميكية --- */
+.dynamic-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #0f0c29, #302b63, #24243e, #0f0c29);
+    background-size: 400% 400%;
+    animation: gradientBG 25s ease infinite;
+    z-index: -1; /* خلف كل شيء */
+    filter: blur(2px); /* تمويه خفيف */
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- تأثير الزجاج (Glassmorphism) --- */
+.glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-intensity));
+    -webkit-backdrop-filter: blur(var(--blur-intensity)); /* لدعم Safari */
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* --- شاشة الترحيب --- */
+#welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    max-width: 450px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#welcome-screen.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none; /* تعطيل التفاعل عند الإخفاء */
+}
+
+#welcome-screen .logo {
+    width: 80px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+#welcome-screen h1 {
+    font-family: var(--font-futuristic);
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+#welcome-screen p {
+    margin-bottom: 25px;
+    font-size: 1rem;
+    color: #b0b0b0;
+}
+
+#welcome-screen input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#welcome-screen input[type="text"]:focus {
+    border-color: var(--primary-color);
+}
+
+#welcome-screen button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-family: var(--font-primary);
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#welcome-screen button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
+}
+
+/* --- حاوية الدردشة الرئيسية --- */
+#chat-container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    max-height: 800px; /* تحديد أقصى ارتفاع */
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: scale(1);
+    border-radius: 15px; /* تطبيق الانحناء على الحاوية الرئيسية */
+    overflow: hidden; /* مهم لمنع المحتوى من تجاوز الحدود المنحنية */
+}
+
+#chat-container.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    position: absolute; /* لإخفائه تمامًا */
+}
+
+/* --- قائمة المحادثات (الجانبية) --- */
+.chat-list {
+    flex: 0 0 280px; /* عرض ثابت للقائمة الجانبية */
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--glass-border); /* خط فاصل زجاجي */
+    overflow-y: auto; /* تمرير إذا زاد المحتوى */
+}
+
+.chat-list h2 {
+    font-family: var(--font-futuristic);
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--glass-border);
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.chat-list ul {
+    list-style: none;
+    flex-grow: 1; /* تأخذ المساحة المتبقية */
+    overflow-y: auto; /* تمرير لقائمة المحادثات فقط */
+    padding-right: 5px; /* مسافة لشريط التمرير */
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #c0c0c0;
+}
+
+.chat-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+}
+
+.chat-item.active {
+    background-color: rgba(0, 212, 255, 0.15);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.chat-icon {
+    margin-left: 10px;
+    font-size: 1.1rem;
+}
+
+/* تمييز المجموعات والخاص */
+.chat-item.group .chat-icon { color: #63e6be; } /* لون للمجموعات */
+.chat-item.private .chat-icon { color: #a855f7; } /* لون للخاص */
+.chat-item.group.active { border-right: 3px solid #63e6be; }
+.chat-item.private.active { border-right: 3px solid #a855f7; }
+
+.user-profile {
+    margin-top: auto; /* يدفع للأسفل */
+    padding-top: 15px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+#current-username {
+    font-weight: bold;
+    color: var(--primary-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+}
+
+#logout-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+}
+#logout-button:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+    color: var(--primary-color);
+}
+
+/* --- منطقة الدردشة الرئيسية --- */
+.chat-area {
+    flex-grow: 1; /* تأخذ باقي المساحة */
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.1); /* خلفية أغمق قليلاً لمنطقة الدردشة */
+    border-radius: 0 15px 15px 0; /* تطابق انحناء الحاوية */
+}
+
+.chat-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--glass-border);
+    flex-shrink: 0; /* تمنع التقلص */
+    z-index: 1; /* فوق الرسائل */
+}
+
+.chat-header h3 {
+    font-family: var(--font-futuristic);
+    color: var(--text-color);
+    font-size: 1.3rem;
+}
+
+/* --- منطقة عرض الرسائل --- */
+.messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* أهم خاصية لعرض الرسائل والتمرير */
+    display: flex;
+    flex-direction: column; /* الرسائل تترتب عمودياً */
+    gap: 15px; /* مسافة بين الرسائل */
+}
+
+/* تصميم شريط التمرير (اختياري) */
+.messages::-webkit-scrollbar {
+    width: 8px;
+}
+.messages::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.messages::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+.messages::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondary-color);
+}
+
+/* --- تصميم الرسائل --- */
+.message {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 12px;
+    opacity: 0; /* للأنيميشن */
+    animation: fadeInSlide 0.5s ease forwards;
+    word-wrap: break-word; /* كسر الكلمات الطويلة */
+    line-height: 1.5;
+}
+
+/* أنيميشن ظهور الرسالة */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message .sender {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.message .text {
+    font-size: 0.95rem;
+    margin: 0; /* إزالة الهامش الافتراضي للفقرة */
+}
+
+.message .timestamp {
+    display: block;
+    font-size: 0.7rem;
+    color: #a0a0a0;
+    margin-top: 8px;
+    text-align: left; /* محاذاة لليسار داخل الفقاعة */
+    opacity: 0.7;
+}
+
+/* الرسائل المستلمة (من الآخرين) */
+.message.received {
+    background-color: rgba(40, 45, 60, 0.7); /* لون خلفية مميز */
+    align-self: flex-start; /* محاذاة لليمين (بداية في RTL) */
+    border-bottom-right-radius: 4px; /* شكل مميز */
+}
+.message.received .sender {
+    color: var(--primary-color);
+}
+
+/* الرسائل المرسلة (من المستخدم الحالي) */
+.message.sent {
+    background: linear-gradient(45deg, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3)); /* خلفية مميزة للمرسل */
+    align-self: flex-end; /* محاذاة لليسار (نهاية في RTL) */
+    color: #f0f0f0;
+    border-bottom-left-radius: 4px; /* شكل مميز */
+}
+.message.sent .sender {
+    /* يمكن إخفاء اسم المرسل لرسائله */
+     display: none;
+}
+.message.sent .timestamp {
+    text-align: right; /* محاذاة لليمين داخل الفقاعة */
+}
+
+/* --- منطقة إدخال الرسالة --- */
+.message-input-area {
+    display: flex;
+    padding: 15px 20px;
+    border-top: 1px solid var(--glass-border);
+    flex-shrink: 0; /* تمنع التقلص */
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px; /* حواف دائرية */
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    outline: none;
+    margin-left: 10px; /* مسافة بين الحقل والزر */
+    transition: background-color 0.3s ease;
+}
+
+#message-input:focus {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#send-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 50%; /* زر دائري */
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* تمنع التقلص */
+}
+
+#send-button svg {
+    fill: white;
+    width: 20px;
+    height: 20px;
+    transform: translateX(-1px); /* ضبط أيقونة الإرسال */
+}
+
+#send-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+#send-button:active {
+    transform: scale(1.05);
+}
+
+/* --- الاستجابة للشاشات الصغيرة (Responsive) --- */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px; /* تصغير حجم الخط الأساسي */
+    }
+
+    #chat-container {
+        flex-direction: column; /* ترتيب عمودي */
+        width: 100%;
+        height: 100vh; /* ملء الشاشة */
+        max-height: none;
+        border-radius: 0; /* إزالة الانحناء في الشاشات الصغيرة */
+    }
+
+    .chat-list {
+        flex: 0 0 auto; /* السماح له بالتقلص */
+        max-height: 200px; /* تحديد ارتفاع للقائمة الجانبية */
+        border-left: none;
+        border-bottom: 1px solid var(--glass-border); /* خط فاصل سفلي */
+        padding: 10px;
+    }
+    .chat-list h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    .chat-item {
+        padding: 10px 8px;
+    }
+    .user-profile {
+        padding-top: 10px;
+    }
+
+
+    .chat-area {
+        border-radius: 0; /* إزالة الانحناء */
+    }
+
+    .chat-header {
+        padding: 12px 15px;
+    }
+    .chat-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .messages {
+        padding: 15px;
+        gap: 12px;
+    }
+    .message {
+        max-width: 85%; /* زيادة عرض الرسالة قليلاً */
+        padding: 8px 12px;
+    }
+    .message .text {
+        font-size: 0.9rem;
+    }
+
+    .message-input-area {
+        padding: 10px 15px;
+    }
+    #message-input {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+    }
+    #send-button {
+        width: 40px;
+        height: 40px;
+    }
+    #send-button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    #welcome-screen {
+        padding: 30px;
+        width: 90%;
+    }
+}
+
+/* --- أدوات مساعدة --- */
+.hidden {
+    display: none !important; /* لإخفاء العناصر تمامًا */
+}
